@@ -1,0 +1,64 @@
+v1 = 0
+v2 = 0
+v3 = 0
+v4 = 0
+vn = 0
+vb = 0
+vv = 0
+vt = 0
+voto = 0
+
+print("CONFIGURAÇÃO")
+a = input("Insira o nome do primeiro candidato: ")
+b = input("Insira o nome do segundo candidato: ")
+c = input("Insira o nome do terceiro candidato: ")
+d = input("Insira o nome do quarto candidato: ")
+
+print("\nVOTAÇÃO")
+while voto != -1:
+    voto = int(input("Insira o código do candidato: "))
+    if voto!=-1:
+        titulo = int(input("Insira o número do título de eleitor: "))
+        nome = input("Insira o nome do eleitor: ")
+        print("\n")
+        if voto == 0:
+            vb = vb+1
+            vv = vv+1
+        elif voto == 1:
+            v1 = v1+1
+            vv = vv + 1
+        elif voto == 2:
+            v2 = v2+1
+            vv = vv + 1
+        elif voto == 3:
+            v3 = v3+1
+            vv = vv + 1
+        elif voto == 4:
+            v4 = v4+1
+            vv = vv + 1
+        else:
+            vn = vn+1
+
+vt = vv+vn
+
+print("\nRESULTADOS")
+print("1-", a,":",v1,"votos.")
+print("2-", b,":",v2,"votos.")
+print("3-", c,":",v3,"votos.")
+print("4-", d,":",v4,"votos.")
+
+print("\nVENCEDOR")
+if v1>v2 and v1>v3 and v1>v4:
+    print ("1-", a, ":", v1*100/vv, "% em relação aos votos válidos.")
+elif v2>v1 and v2>v3 and v2>v4:
+    print ("2-", b, ":", v2*100/vv, "% em relação aos votos válidos.")
+elif v3>v1 and v3>v2 and v3>v4:
+    print ("3-", c, ":", v3*100/vv, "% em relação aos votos válidos.")
+elif v4>v1 and v4>v2 and v4>v3:
+    print ("4-", d, ":", v4*100/vv, "% em relação aos votos válidos.")
+
+print ("\nVOTOS EM BRANCO")
+print(vb*100/vv,"% de votos em branco em relação aos votos válidos")
+
+print("\nVOTOS NULOS")
+print(vn*100/vt,"% de votos nulos em relação ao total de votos.")
