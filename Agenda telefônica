@@ -1,0 +1,73 @@
+import os.path
+
+#Novo contato
+def novo_contato():
+    # Variável para contagem de erros
+    erros = 0
+
+    #Coletando variáveis
+    print("\n============================================================================")
+    nome = str(input("Nome: "))
+    email = str(input("Email: "))
+    telefone = str(input("Telefone: "))
+    site = str(input("Site: "))
+    twitter = str(input("Twitter: "))
+    facebook = str(input("Facebook: "))
+    print("============================================================================\n")
+
+    #Verificando email
+    if '@' not in email:
+        print("Email inválido! O email deve conter '@'.")
+        erros += 1
+
+    #Verificando número
+    if len(telefone) < 8:
+        print("Telefone inválido! O número do telefone deve ter no mínimo 8 dígitos.")
+        erros += 1
+
+    #Verificando site
+    if 'www.' not in site:
+        print("Site inválido! O endereço do site deve conter 'www.'")
+        erros += 1
+
+    #Escreve as variáveis no 'arquivo agenda.txt'
+    if erros == 0:
+        arquivo_agenda = open('agenda.txt', 'a')
+        arquivo_agenda.write(f'Nome: {nome}')
+        arquivo_agenda.write(f'\nEmail: {email}')
+        arquivo_agenda.write(f'\nTelefone: {telefone}')
+        arquivo_agenda.write(f'\nSite: {site}')
+        arquivo_agenda.write(f'\nTwitter: {twitter}')
+        arquivo_agenda.write(f'\nFacebook: {facebook}\n\n')
+        arquivo_agenda.close()
+        print ('Contato cadastrado!')
+
+#Ver contatos
+def ver_agenda():
+    #Se o arquivo 'agenda.txt' não existir, ele cria o arquivo em branco evitando, assim, gerar erro
+    if os.path.exists('agenda.txt') == False:
+        arquivo_agenda = open('agenda.txt', 'w')
+    print('\n============================================================================')
+    arquivo_agenda = open('agenda.txt', 'r')
+    linha = arquivo_agenda.read()
+    print(linha)
+    arquivo_agenda.close()
+
+#Apagar agenda
+def apagar_agenda():
+    arquivo_agenda = open('agenda.txt', 'w')
+    arquivo_agenda.close()
+    print('\n============================================================================\n')
+    print('Agenda apagada!')
+
+#Menu
+while True:
+    menu = int(input("\n============================================================================\n[1] Novo contato\n[2] Ver agenda\n[3] Apagar agenda\n[4] Sair\n"))
+    if menu == 1:
+        novo_contato()
+    elif menu == 2:
+        ver_agenda()
+    elif menu == 3:
+        apagar_agenda()
+    else:
+        break
