@@ -1,0 +1,141 @@
+codigo = []
+titulo = []
+quantidade = []
+matricula = []
+emprestimos = []
+livros = []
+solicitado = []
+
+while True:
+    print('\n[1] Cadastrar exemplar')
+    print('[2] Registrar empréstimo')
+    print('[3] Emitir relatório de empréstimos')
+    print('[4] Indicar livro mais solicitado')
+    print('[5] Indicar livro menos solicitado')
+    print('[6] Indicar livros não solicitados')
+
+    menu = int(input())
+
+#Cadastro
+    if (menu == 1):
+        print('\n')
+        code = input('Insira o código do exemplar: ')
+
+        if (code in codigo):
+            pos = codigo.index(code)
+            quantidade[pos] = int(quantidade[pos]) + int(input(f'O exemplar {titulo[pos]} já está cadastrado!\nQuantas cópias deseja adicionar? '))
+
+        else:
+            codigo.append(code)
+            titulo.append(input('Insira o título do exemplar: '))
+            solicitado.append(0)
+            quantidade.append(input('Insira a quantidade de exemplares: '))
+        print('\n')
+
+#Empréstimo
+    elif (menu == 2):
+        code = int(input('\nInsira a matrícula do aluno: '))
+
+        if code in matricula:
+            pos = matricula.index(code)
+            a = emprestimos[pos]
+            print(f'O aluno possui os exemplares {a} emprestados.')
+            qtd=0
+
+            while qtd<1 or qtd>3:
+                b = int(input('Quantos livros a serem emprestados? '))
+                qtd = len(a) + b
+                if b == 0:
+                    break
+                if qtd > 3:
+                    print('Quantidade de empréstimos excedida! Diminua a quantidade de livros a serem emprestados ou digite 0 para cancelar!\n')
+
+                if b != 0:
+                    i = 1
+                    while i<=b:
+                        code2 = input(f'Insira o código do {i}° livro a ser emprestado: ')
+                        if (code2 in codigo):
+                            pos2 = codigo.index(code2)
+                            qtd2 = quantidade[pos2]
+                            if int(qtd2) > 0:
+                                a.append(code2)
+                                i = i+1
+                                quantidade[pos2] = int(qtd2) - 1
+                                solicitado[pos2] = int(solicitado[pos2]) + 1
+                            else:
+                                print('Livro não disponível. Digite 1 para tentar novamente ou 0 para cancelar.')
+                                if int(input()) == 0:
+                                    break
+                        else:
+                            print ('Livro não disponível. Digite 1 para tentar novamente ou 0 para cancelar.')
+                            if int(input()) == 0:
+                                break
+                emprestimos[pos] = a
+
+        else:
+            matricula.append(code)
+            b=0
+            while b<1 or b>3:
+                b = int(input('Quantos livros a serem emprestados? '))
+            i = 1
+            a = []
+            while i <= b:
+                code2 = input(f'Insira o código do {i}° livro a ser emprestado: ')
+                if (code2 in codigo):
+                    pos2 = codigo.index(code2)
+                    qtd2 = quantidade[pos2]
+                    if int(qtd2) > 0:
+                        a.append(code2)
+                        i = i+1
+                        quantidade[pos2] = int(qtd2) - 1
+                        solicitado[pos2] = int(solicitado[pos2]) + 1
+                    else:
+                        print('Livro não disponível. Digite 1 para tentar novamente ou 0 para cancelar.')
+                        if int(input()) == 0:
+                            break
+                else:
+                    print('Livro não disponível. Digite 1 para tentar novamente ou 0 para cancelar.')
+                    if int(input()) == 0:
+                        break
+            emprestimos.append(a)
+
+#Relatório
+    elif (menu == 3):
+        qtd_a = len(matricula)
+        print('\033[1m' + ('\nMATRÍCULA' + ('QUANTIDADE DE EXEMPLARES').rjust(40," ") + '\033[0m'))
+        i = 0
+        soma = 0
+        while i < qtd_a:
+            a = emprestimos[i]
+            print((f'{matricula[i]}') + (f'{len(a)}').rjust(22," "))
+            soma = soma + len(a)
+            i = i+1
+        print('-------------------------------------------------')
+        print(f'TOTAL = {soma} EXEMPLARES EMPRESTADOS.')
+        print('-------------------------------------------------')
+
+#Mais Solicitados
+    elif (menu == 4):
+        max = int(max(solicitado))
+        i = 0
+        print('\nOs exemplares mais solicitados são:')
+        for i in range(len(solicitado)):
+            if max == solicitado[i]:
+                print(titulo[i])
+
+#Menos Solicitados
+    elif (menu == 5):
+        min = int(min(solicitado))
+        i = 0
+        print('\nOs exemplares menos solicitados são:')
+        for i in range(len(solicitado)):
+            if min == solicitado[i]:
+                print(titulo[i])
+
+#Não Solicitados
+    elif (menu == 6):
+        i = 0
+        print('\nOs exemplares não solicitados são:')
+        for i in range(len(solicitado)):
+            if solicitado[i] == 0:
+                print(titulo[i])
