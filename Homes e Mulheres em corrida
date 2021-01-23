@@ -1,0 +1,37 @@
+homem = mulher =  0
+qhe = ihe = 0
+ho_se_maior40 = []
+mu_ce = []
+
+while True:
+    num = int(input('Insira o número de inscrição: '))
+    if (num == -1):
+        break
+
+    n = str(input('Insira o nome: '))
+    i = int(input('Insira a idade: '))
+    e = int(input('Possui experiência? 1-Sim 2-Não '))
+    s = int(input('Insira o sexo: 1-Masculino 2-Feminino \n'))
+
+    if (s == 1):
+        homem += 1
+    else:
+        mulher += 1
+
+    if (s==1 and e==1):
+        ihe += i
+        qhe += 1
+
+    if (s==1 and i>40 and e==2):
+        ho_se_maior40.append(n)
+        
+    if (s==2 and e==1):
+        mu_ce.append(n)
+
+print(f'a) {homem} candidatos são homens e {mulher} candidatos são mulheres.')
+if (qhe==0):
+    print (f'b) A média da idade dos homens que possuem experiência é 0')
+else:
+    print(f'b) A média da idade dos homens que possuem experiência é {ihe/qhe}')
+print(f'c) {ho_se_maior40}')
+print(f'd) {mu_ce}')
