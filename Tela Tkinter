@@ -1,0 +1,39 @@
+from tkinter import*
+
+def cadastro_click():
+    print(ed1.get())
+    print(ed2.get())
+
+janela = Tk()
+janela.title("Cadastro")
+janela["bg"] = "white"
+
+
+#Tamanho e posicionamento da janela
+largura = 400
+altura = 600
+x = int((janela.winfo_screenwidth() - janela.winfo_reqwidth() - largura/2) / 2)
+y = int((janela.winfo_screenheight() - janela.winfo_reqheight() - altura) / 2)
+
+#Textos
+lb1 = Label(janela, text="Email: ", bg="white", font=("Helvetica", "15"))
+lb2 = Label(janela, text="Senha: ", bg="white", font=("Helvetica", "15"))
+lb3 = Label(janela, text="CADASTRO", bg="white", fg="black", font=("Times", "30", "underline"))
+#Entrada de dados
+ed1 = Entry(janela, bg="#DCDCDC", font=("Helvetica", "15", "italic"), fg="#4F4F4F", width=25)
+ed2 = Entry(janela, bg="#DCDCDC", font=("Helvetica", "15", "italic"), fg="#4F4F4F", width=25)
+#Botões
+bt1 = Button(janela, text="Cadastrar", font=("Helvetica", "15"), fg="black", bg="#3CB371", command=cadastro_click)
+bt2 = Button(janela, text="Sair", font=("Helvetica", "15"), fg="black", bg="red", command=janela.destroy)
+
+#Posicionamento dos componentes
+lb1.place(x=21, y=210)
+lb2.place(x=21, y=250)
+lb3.place(x=90, y=100)
+ed1.place(x=90, y=213)
+ed2.place(x=90, y=253)
+bt1.place(x=160, y=300)
+bt2.place(x=27, y=500)
+
+janela.geometry(f"{largura}x{altura}+{x}+{y}")
+janela.mainloop()
