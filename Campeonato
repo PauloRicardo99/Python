@@ -1,0 +1,97 @@
+time = []
+tecnico = []
+pontos = []
+total_p = 0
+
+def classificacao():
+    print('Times' + 'Pontos'.rjust(35, " "))
+    print('-' * 40)
+    for i in range(len(time)):
+        tam = len(time[i])
+        print(f'{time[i]}' + f'{pontos[i]}'.rjust(40 - tam, " "))
+    pass
+
+while True:
+    print('\n[1] Cadastrar Time')
+    print('[2] Cadastrar jogo')
+    print('[3] Exibir Classificação')
+    print('[4] Exibir time campeão')
+    print('[5] Exibir time rebaixado')
+    print('[6] Encerrar campeonato')
+
+    menu = int(input(''))
+    print('\n')
+
+    if menu == 1:
+        if len(time) < 8:
+            time_in = input('Time: ')
+            if time_in in time:
+                print('Esse time já foi cadastrado!')
+            else:
+                tecnico_in = input('Técnico: ')
+                time.append(time_in)
+                tecnico.append(tecnico_in)
+                pontos.append('0')
+        else:
+            print('Limite de times alcançado!')
+
+    elif menu == 2:
+        time1 = input('Time 1: ')
+        while True:
+            if time1 in time:
+                time2 = input('Time 2: ')
+                if time2 in time:
+                    gols1 = input(f'Gols do time {time1}: ')
+                    gols2 = input(f'Gols do time {time2}: ')
+                    if gols1 > gols2:
+                        i = time.index(time1)
+                        pontos[i] = int(pontos[i]) + 3
+                        pontos[i] = str(pontos[i])
+                        total_p = total_p + 3
+                    elif gols2 > gols1:
+                        i = time.index(time2)
+                        pontos[i] = int(pontos[i]) + 3
+                        pontos[i] = str(pontos[i])
+                        total_p = total_p + 3
+                    else:
+                        i = time.index(time1)
+                        j = time.index(time2)
+                        pontos[i] = int(pontos[i]) + 1
+                        pontos[j] = int(pontos[j]) + 1
+                        pontos[i] = str(pontos[i])
+                        pontos[j] = str(pontos[j])
+                        total_p = total_p + 2
+                    break
+                else:
+                    print('Time não cadastrado! Digite 1 para tentar novamente ou 0 para cancelar.')
+                    if int(input()) == 0:
+                        break
+            else:
+                print('Time não cadastrado! Digite 1 para tentar novamente ou 0 para cancelar.')
+                if int(input()) == 0:
+                    break
+
+    elif menu == 3:
+        classificacao()
+
+    elif menu == 4:
+        for i in range(len(pontos)):
+            if int(max(pontos)) == int(pontos[i]):
+                pos = pontos.index(pontos[i])
+                print(f'\nTime: {time[pos]}')
+                print(f'Técnico: {tecnico[pos]}')
+                print(f'Pontos: {pontos[pos]}')
+                print(f'Percentual de pontos em relação ao campeonato: {((int(pontos[pos])) / total_p)*100}')
+
+    elif menu == 5:
+        for i in range(len(pontos)):
+            if int(min(pontos)) == int(pontos[i]):
+                pos = pontos.index(pontos[i])
+                print(f'\nTime: {time[pos]}')
+                print(f'Técnico: {tecnico[pos]}')
+                print(f'Pontos: {pontos[pos]}')
+                print(f'Percentual de pontos em relação ao campeonato: {((int(pontos[pos])) / total_p)*100}')
+
+    elif menu == 6:
+        classificacao()
+        break
