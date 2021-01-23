@@ -1,0 +1,36 @@
+0
+nao = 0
+soma = 0
+n = 0
+sim18m = 0
+naoF = 0
+total = 0
+
+while True:
+    print("\n")
+    codigo = int(input("Digite o código do respondente: "))
+    if codigo == -1:
+        break
+
+    sexo = str(input("Informe o sexo (M/F): ")).upper()
+
+    idade = int(input("Informe a idade: "))
+    soma = soma + idade
+    n = n+1
+
+    resp = str(input("O respondente gostou do produto? (S/N) ")).upper()
+    if resp == 'S':
+        sim = sim+1
+        if idade >= 18 and sexo == 'M':
+            sim18m = sim18m + 1
+    elif resp == 'N':
+        nao = nao+1
+        if idade < 18 and sexo == 'F':
+            naoF = naoF+1
+
+print("\nResultados")
+print(f"{sim} pessoas gostaram do produto.")
+print(f"{nao} pessoas não gostaram do produto.")
+print(f"{sim18m} pessoas são do sexo masculino, maiores de 18 anos e gostaram do produto.")
+print(f"{naoF*100/n}% das pessoas são do sexo feminino menores de 18 anos e não gostaram do produto")
+print(f"A média de idade das pessoas que responderam a pesquisa é de {soma/n} anos")
