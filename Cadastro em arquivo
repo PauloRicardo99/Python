@@ -1,0 +1,120 @@
+import os.path
+
+# Novo funcionário
+def cadastro():
+    # Variável para contagem de erros
+    erro = 0
+
+    # coletando variáveis
+    print("\n============================================================================")
+    c_matricula = input('Matrícula: ')
+    c_nome = input('Nome: ')
+    c_email = input('Email: ')
+    c_telefone = input('Telefone: ')
+    c_celular = input('Celular: ')
+    c_endereco = input('Endereço: ')
+    c_numero = input('Número: ')
+    c_bairro = input('Bairro: ')
+    c_cidade = input('Cidade: ')
+    c_uf = input('UF: ')
+    c_complemento = input('Complemento: ')
+    c_cargo = input('Cargo: ')
+    c_salario = float(input('Salário: '))
+    c_setor = input('Setor: ')
+    c_salarioL = float(input('Salário líquido: '))
+    c_inss = input('INSS: ')
+    c_irrf = input(('IRRF: '))
+    print("============================================================================\n")
+
+    # Verificando email
+    if '@' not in c_email:
+        print("Email inválido! O email deve conter '@'.")
+        erro += 1
+
+    # Verificando número do telefone
+    if len(c_telefone) < 8:
+        print("Telefone inválido! O número do telefone deve ter no mínimo 8 dígitos.")
+        erro += 1
+
+    # Verificando número do telefone
+    if len(c_celular) < 8:
+        print("Celular inválido! O número do celular deve ter no mínimo 8 dígitos.")
+        erro += 1
+
+    # Escreve as variáveis no 'arquivo agenda.txt'
+    if erro == 0:
+        setor_in = False
+        ar_funcionarios = open('Funcionários.txt', 'a')
+        ar_funcionarios.write(f'Matricula: {c_matricula}')
+        ar_funcionarios.write(f'\nNome: {c_nome}')
+        ar_funcionarios.write(f'\nEmail: {c_email}')
+        ar_funcionarios.write(f'\nTelefone: {c_telefone}')
+        ar_funcionarios.write(f'\nCelular: {c_celular}')
+        ar_funcionarios.write(f'\nEndereco: {c_endereco}')
+        ar_funcionarios.write(f'\nNumero: {c_numero}')
+        ar_funcionarios.write(f'\nBairro: {c_bairro}')
+        ar_funcionarios.write(f'\nCidade: {c_cidade}')
+        ar_funcionarios.write(f'\nUF: {c_uf}')
+        ar_funcionarios.write(f'\nComplemento: {c_complemento}')
+        ar_funcionarios.write(f'\nCargo: {c_cargo}')
+        ar_funcionarios.write(f'\nSetor: {c_setor}')
+        ar_funcionarios.write(f'\nSalario: {c_salario}')
+        ar_funcionarios.write(f'\nSalario liquido: {c_salarioL}')
+        ar_funcionarios.write(f'\nINSS: {c_inss}')
+        ar_funcionarios.write(f'\nIRRF: {c_irrf}\n\n')
+        ar_funcionarios.close()
+        if os.path.exists('custos_setor.txt') == True:
+            ar_setor = open('custos_setor.txt', 'r')
+            linha = ar_setor.read()
+            if f'Setor {c_setor}: R$' in linha:
+                setor_in = True
+                ar_setor = open('custos_setor.txt', 'r')
+                for linhaS in ar_setor:
+                    if f'Setor {c_setor}: R$' in linhaS:
+                        a = linhaS.replace(f'Setor {c_setor}: R$',"")
+                        salarioA = float(a.rstrip())
+                        valor = c_salario + float(salarioA)
+                        linha = linha.replace(f'Setor {c_setor}: R${salarioA}', f'Setor {c_setor}: R${str(valor)}')
+            ar_setor = open('custos_setor.txt', 'w')
+            ar_setor.write(linha)
+            ar_setor.close()
+            if setor_in == False:
+                ar_setor = open('custos_setor.txt', 'a')
+                ar_setor.write(f'Setor {c_setor}: R${c_salario}\n')
+                ar_setor.close()
+        else:
+            ar_setor = open('custos_setor.txt', 'w')
+            ar_setor.write(f'Setor {c_setor}: R${c_salario}\n')
+            ar_setor.close()
+        print('Funcionário cadastrado!')
+
+# Ver funcionários
+def lista():
+    # Se o arquivo 'agenda.txt' não existir, ele cria o arquivo em branco evitando, assim, gerar erro
+    if os.path.exists('Funcionários.txt') == True:
+        # Imprime as linhas do arquivo
+        print('\n============================================================================')
+        ar_funcionarios = open('Funcionários.txt', 'r')
+        linha = ar_funcionarios.read()
+        print(linha)
+        ar_funcionarios.close()
+
+# Ver os custos por setor
+def custos():
+    if os.path.exists('custos_setor.txt') == True:
+        ar_setor = open('custos_setor.txt', 'r')
+        linha = ar_setor.read()
+        print("\n============================================================================")
+        print(linha)
+        ar_setor.close()
+
+while True:
+    menu = int(input('\n============================================================================\n[1] Cadastrar funcionário\n[2] Listar funcionários\n[3] Custos por setor\n[4] Sair\n'))
+    if menu == 1:
+        cadastro()
+    elif menu == 2:
+        lista()
+    elif menu == 3:
+        custos()
+    else:
+        break
